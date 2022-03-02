@@ -18,12 +18,12 @@ app.get('/', (request, response) => {
     response.send('testing testing...is this thing on??')
 });
 
-app.get('/weather', (request, reponse) =>{
+app.get('/weather', (request, response) =>{
     let lat = request.query.lat;
-    let lat = request.query.lon;
+    let lon = request.query.lon;
     let searchQuery = request.query.searchQuery;
     
-    const city = weather.find(cityObj => cityObj.city_name.toLowerCase() === searchQuery, toLOwerCase());
+    const city = weather.find(cityObj => cityObj.city_name.toLowerCase() === searchQuery.toLowerCase());
 
     try{
         const weatherArray = city.data.map(day => new Forecast(day));
