@@ -32,10 +32,11 @@ app.get('/weather', async (request, response) =>{
 
     console.log(url);
     
+    try{
     const weatherData = await axios.get(url);
     console.log(weatherData.data.data);
 
-    try{
+    
          const weatherArray = weatherData.data.data.map(day => new Forecast(day));
 
         response.status(200).send(weatherArray);
@@ -45,6 +46,36 @@ app.get('/weather', async (request, response) =>{
         response.status(500).send('city not found')
     }
 })
+
+app.get('/movies', async (request, response) => {
+let searchQuery = request.query.searchQuery;
+console.log("city we searched for: ", searchQuery);
+
+const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.b8e8821a3d5d2362f6ee2319a3e9de8}&language=en-US&page=1&query=${searchQuery}`
+console.log('url: ', url);
+
+try{
+    const movieData = await axios.get(url);
+    console.log(movieData.data.results);
+    const movieArray = movieData.data.data.map(movie => new Movie(movie));
+        response.status(200).send(movieArray);
+
+    }catch(error) {
+        console.log(error);
+        response.status(500).send('movie not found')
+    }
+
+})
+
+function Movie(movie){
+    this.title = movie.title,
+    this.overview =  movie.overview,
+    this.average_voters = movie.vote_average,
+    this.total_votes = movie.vote_count,
+    this.image_url =  'https://image.tmdb.org/t/p/w500' + movie.poster_path,
+    this.popularity = movie.popularity,
+    this. released_on = movie.release_date
+}
 
 function Forecast(day) {
     this.day = day.vaild_date
