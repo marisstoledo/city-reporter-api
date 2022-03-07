@@ -58,6 +58,7 @@ try{
     const movieData = await axios.get(url);
     console.log(movieData.data.results);
     const movieArray = movieData.data.data.map(movie => new Movie(movie));
+    
         response.status(200).send(movieArray);
 
     }catch(error) {
