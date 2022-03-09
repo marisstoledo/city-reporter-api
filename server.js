@@ -6,7 +6,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const weather = require('./data/weather.json');
-const { response } = require('express');
+// const { response } = require('express');
 
 //App to use...
 const app = express();
@@ -79,7 +79,7 @@ function Movie(movie){
 }
 
 function Forecast(day) {
-    this.day = day.vaild_date
+    this.day = day.valid_date
     this.description = day.weather.description
 }
 
